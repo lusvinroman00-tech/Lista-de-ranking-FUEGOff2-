@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b14">
+<title>FUEGOff2 | Seguidores Fieles</title>
+<style>
+:root{--bg:#090b14;--panel:#121827;--panel2:#182237;--line:#2b3650;--txt:#f5f7fc;--muted:#9eabc1;--red:#ff3854;--cyan:#48dcff;--gold:#ffd166;--green:#58d69a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#2a1832 0,transparent 32%),var(--bg);color:var(--txt);font:15px/1.5 system-ui,Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:22px 15px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#782dff);font-weight:1000;box-shadow:0 8px 25px #ff385433}.brand h1{font-size:clamp(22px,4vw,31px);margin:0}.sub{font-size:12px;color:var(--muted);letter-spacing:1px}.status{font-size:12px;border:1px solid #276174;color:#a9efff;background:#10242e;padding:7px 11px;border-radius:99px}
+.hero{padding:22px;border:1px solid var(--line);border-radius:19px;background:linear-gradient(120deg,#281522,#171d32 68%,#102d3a);margin-bottom:17px}.hero h2{margin:0 0 5px;font-size:21px}.hero p{margin:0;color:#c3cada}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:3px}
+.tabs,.periods{display:flex;gap:8px;overflow:auto;padding:3px 0 12px}.tab,.period{white-space:nowrap;border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:9px 13px;border-radius:10px;font-weight:750;cursor:pointer}.tab.active,.period.active{background:#351a28;border-color:var(--red);color:#fff}
+.grid{display:grid;grid-template-columns:1.35fr .85fr;gap:15px}.panel h3{margin:0 0 12px;font-size:17px}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.pill{font-size:11px;border:1px solid #276174;color:#a9efff;padding:3px 8px;border-radius:99px}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--muted);font-size:12px;font-weight:650;padding:10px 7px;border-bottom:1px solid var(--line)}td{padding:11px 7px;border-bottom:1px solid #242e43}tr:last-child td{border:0}.rank{color:var(--gold);font-weight:900}.pts{color:var(--cyan);font-weight:900}.empty{text-align:center;padding:25px 8px;color:var(--muted)}.muted{color:var(--muted)}.notice{background:#102b32;border:1px solid #1d5962;color:#c0f0f5;border-radius:11px;padding:11px;font-size:13px;margin:10px 0}
+label{display:grid;gap:5px;color:#cbd3e1;font-size:13px;margin:9px 0}input,select{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:#0b111e;color:var(--txt);font:inherit}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:800;background:linear-gradient(100deg,var(--red),#a52cff);color:white;cursor:pointer}.btn.secondary{background:#222e45;border:1px solid var(--line)}.btn.danger{background:#48212c;border:1px solid #793344}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hidden{display:none!important}.foot{font-size:12px;color:var(--muted);text-align:center;margin-top:20px}.loginbox{max-width:440px;margin:12px auto}.msg{font-size:13px;color:var(--gold);min-height:20px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.stat{padding:11px}.stat strong{font-size:21px}table{font-size:12px}th,td{padding:9px 4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div class="brand"><div class="logo">FF2</div><div><h1>FUEGOff2</h1><div class="sub">SEGUIDORES FIELES</div></div></div>
+ <div class="status" id="connectionStatus">● Configuración pendiente</div>
+</header>
+<section class="hero"><h2>El apoyo de la comunidad cuenta ❤️</h2><p>Consulta los rankings de seguidores de YouTube, Facebook, Instagram y TikTok. Cada acción válida suma 1 punto.</p></section>
+<div class="stats">
+ <div class="stat"><small>Seguidores registrados</small><strong id="peopleCount">—</strong></div>
+ <div class="stat"><small>Interacciones válidas</small><strong id="actionCount">—</strong></div>
+ <div class="stat"><small>Puntos acumulados</small><strong id="pointCount">—</strong></div>
+</div>
+<nav class="tabs" id="platformTabs">
+ <button class="tab active" data-platform="YouTube">▶ YouTube</button><button class="tab" data-platform="Facebook">f Facebook</button><button class="tab" data-platform="Instagram">◎ Instagram</button><button class="tab" data-platform="TikTok">♪ TikTok</button>
+</nav>
+<nav class="periods" id="periodTabs">
+ <button class="period active" data-period="daily">Diario</button><button class="period" data-period="weekly">Semanal</button><button class="period" data-period="monthly">Mensual</button><button class="period" data-period="yearly">Anual</button><button class="period" data-period="all">Permanente</button>
+</nav>
+<div class="grid">
+ <section class="panel">
+  <div class="head"><h3 id="rankingTitle">Ranking de YouTube · Diario</h3><span class="pill">1 acción = 1 punto</span></div>
+  <div id="rankingArea"><div class="empty">Conecta Supabase para mostrar el ranking online.</div></div>
+  <p class="muted" style="font-size:12px;margin-bottom:0">Se cuenta máximo 1 comentario, 1 compartido y 1 like por persona y publicación. En YouTube solo se cuentan comentarios.</p>
+ </section>
+ <aside class="panel">
+  <div class="head"><h3>Acceso de administrador</h3><span class="pill">Privado</span></div>
+  <div id="loginArea">
+   <p class="muted" style="font-size:13px">Solo el administrador puede registrar o modificar puntos. Los rankings son públicos y de solo lectura.</p>
+   <label>Correo<input id="email" type="email" autocomplete="username" placeholder="Tu correo"></label>
+   <label>Contraseña<input id="password" type="password" autocomplete="current-password" placeholder="Contraseña"></label>
+   <div class="actions"><button class="btn" id="loginBtn">Iniciar sesión</button></div>
+   <div class="msg" id="loginMsg"></div>
+  </div>
+  <div id="adminArea" class="hidden">
+   <p class="muted" style="font-size:13px">Sesión de administrador activa.</p>
+   <form id="entryForm">
+    <label>Plataforma<select id="entryPlatform"><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>TikTok</option></select></label>
+    <label>Nombre o usuario<input id="username" maxlength="80" required placeholder="@usuario"></label>
+    <label>Publicación / identificador<input id="post" maxlength="180" required placeholder="Ej. video-agenda-001"></label>
+    <label>Acción<select id="action"><option value="comment">Comentario</option><option value="share">Compartido</option><option value="like">Like</option></select></label>
+    <label>Fecha<input id="actionDate" type="date" required></label>
+    <div class="actions"><button class="btn" type="submit">＋ Registrar +1 punto</button><button class="btn secondary" id="logoutBtn" type="button">Cerrar sesión</button></div>
+   </form>
+   <div class="msg" id="adminMsg"></div>
+   <div class="notice">Los registros duplicados de la misma persona, publicación y acción se rechazan automáticamente.</div>
+  </div>
+ </aside>
+</div>
+<section class="panel" style="margin-top:15px">
+ <div class="head"><h3>Actividad reciente</h3><span class="muted" style="font-size:12px">Visible para todos</span></div>
+ <div id="history"><div class="empty">Esperando conexión con la base de datos.</div></div>
+</section>
+<footer class="foot">FUEGOff2 · Seguidores Fieles · Sitio independiente</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+ CONFIGURACIÓN:
+ 1) Sustituye SUPABASE_URL y SUPABASE_ANON_KEY por los datos públicos de tu proyecto.
+ 2) Ejecuta supabase/schema.sql en el SQL Editor.
+ 3) Crea tu usuario en Supabase Authentication > Users.
+ 4) Añade el UUID de ese usuario a la tabla public.admins (instrucciones en README).
+ Nunca pongas aquí una service_role key.
+*/
+const SUPABASE_URL = "PEGA_AQUI_TU_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "PEGA_AQUI_TU_CLAVE_PUBLICA";
+const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PEGA_AQUI") && !SUPABASE_ANON_KEY.includes("PEGA_AQUI");
+const $=id=>document.getElementById(id);
+let db=null, platform="YouTube", period="daily", currentUser=null, allEntries=[];
+const today=new Date();$("actionDate").value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,"0"),String(today.getDate()).padStart(2,"0")].join("-");
+const periods={daily:"Diario",weekly:"Semanal",monthly:"Mensual",yearly:"Anual",all:"Permanente"};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function dateLocal(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
+function weekStart(s){let d=new Date(s+"T12:00:00");d.setDate(d.getDate()-(d.getDay()+6)%7);return dateLocal(d)}
+function inPeriod(s,p){if(p==="all")return true;let d=new Date(s+"T12:00:00"),n=new Date();if(p==="daily")return s===dateLocal(n);if(p==="weekly")return weekStart(s)===weekStart(dateLocal(n));if(p==="monthly")return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth();if(p==="yearly")return d.getFullYear()===n.getFullYear();return false}
+function isYTActionValid(e){return e.platform!=="YouTube"||e.action==="comment"}
+function aggregate(rows){let m={};rows.forEach(e=>{let k=e.username_norm;if(!m[k])m[k]={username:e.username,comments:0,shares:0,likes:0,points:0};m[k].points++;if(e.action==="comment")m[k].comments++;if(e.action==="share")m[k].shares++;if(e.action==="like")m[k].likes++});return Object.values(m).sort((a,b)=>b.points-a.points||a.username.localeCompare(b.username))}
+function render(){
+ let rows=allEntries.filter(e=>e.platform===platform&&inPeriod(e.occurred_on,period)&&isYTActionValid(e)),rank=aggregate(rows);
+ $("rankingTitle").textContent=`Ranking de ${platform} · ${periods[period]}`;
+ $("rankingArea").innerHTML=rank.length?`<table><thead><tr><th>#</th><th>Persona</th><th>Comentarios</th>${platform==="YouTube"?"":"<th>Compartidos</th><th>Likes</th>"}<th>Puntos</th></tr></thead><tbody>${rank.map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${esc(r.username)}</td><td>${r.comments}</td>${platform==="YouTube"?"":`<td>${r.shares}</td><td>${r.likes}</td>`}<td class="pts">${r.points}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Todavía no hay puntos en este período.</div>';
+ const people=new Set(allEntries.map(e=>e.username_norm));$("peopleCount").textContent=people.size;$("actionCount").textContent=allEntries.length;$("pointCount").textContent=allEntries.length;
+ let recent=[...allEntries].sort((a,b)=>b.created_at.localeCompare(a.created_at)).slice(0,12);
+ $("history").innerHTML=recent.length?`<table><thead><tr><th>Red</th><th>Persona</th><th>Acción</th><th>Publicación</th><th>Fecha</th></tr></thead><tbody>${recent.map(e=>`<tr><td>${e.platform}</td><td>${esc(e.username)}</td><td>${e.action==="comment"?"Comentario":e.action==="share"?"Compartido":"Like"}</td><td>${esc(e.post_ref)}</td><td>${e.occurred_on}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Aún no hay registros.</div>';
+}
+async function loadData(){if(!db)return;const {data,error}=await db.from("interactions").select("id,platform,username,username_norm,post_ref,action,occurred_on,created_at").order("created_at",{ascending:false});if(error){console.error(error);$("connectionStatus").textContent="● Error al cargar";return}allEntries=data||[];$("connectionStatus").textContent="● Conectado";render()}
+function setAdmin(user){currentUser=user;$("loginArea").classList.toggle("hidden",!!user);$("adminArea").classList.toggle("hidden",!user)}
+async function init(){if(!configured||!window.supabase){$("connectionStatus").textContent="● Falta configuración";$("rankingArea").innerHTML='<div class="empty">El sitio ya está preparado, pero falta conectar las credenciales de tu nuevo proyecto Supabase.</div>';return}
+ db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);await loadData();const {data}=await db.auth.getSession();setAdmin(data.session?.user||null);
+ db.auth.onAuthStateChange((_event,session)=>setAdmin(session?.user||null));
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{platform=b.dataset.platform;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));render()}));
+document.querySelectorAll(".period").forEach(b=>b.addEventListener("click",()=>{period=b.dataset.period;document.querySelectorAll(".period").forEach(x=>x.classList.toggle("active",x===b));render()}));
+$("loginBtn").addEventListener("click",async()=>{if(!db)return;$("loginMsg").textContent="";let {error}=await db.auth.signInWithPassword({email:$("email").value,password:$("password").value});$("loginMsg").textContent=error?error.message:"Sesión iniciada."});
+$("logoutBtn").addEventListener("click",async()=>{await db.auth.signOut();$("adminMsg").textContent="Sesión cerrada."});
+$("entryPlatform").addEventListener("change",()=>{$("action").innerHTML=$("entryPlatform").value==="YouTube"?'<option value="comment">Comentario</option>':'<option value="comment">Comentario</option><option value="share">Compartido</option><option value="like">Like</option>'});
+$("entryForm").addEventListener("submit",async e=>{e.preventDefault();if(!db||!currentUser)return;let p=$("entryPlatform").value,u=$("username").value.trim(),post=$("post").value.trim(),a=$("action").value,d=$("actionDate").value;if(p==="YouTube"&&a!=="comment"){alert("En YouTube solo se registran comentarios.");return}
+ let {error}=await db.from("interactions").insert({platform:p,username:u,username_norm:u.toLocaleLowerCase(),post_ref:post,action:a,occurred_on:d,created_by:currentUser.id});
+ if(error){$("adminMsg").textContent=error.code==="23505"?"Esta acción ya estaba registrada para esa persona y publicación.":error.message;return}
+ $("adminMsg").textContent="Acción guardada: +1 punto.";$("username").value="";$("post").value="";await loadData();
+});
+init();
+</script>
+</body></html>
